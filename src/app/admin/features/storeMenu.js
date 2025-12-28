@@ -29,19 +29,16 @@ export const StoreMenu = () => {
       return setErrorAddCategory("Category name is required!!");
     }
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API}/storeCategory`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          body: JSON.stringify({
-            categoryName: addfoodcategory,
-          }),
-        }
-      );
+      const res = await fetch(`http://localhost:8000/storeCategory`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          categoryName: addfoodcategory,
+        }),
+      });
       await getData();
       await getFood();
       setAddFoodCategory("");
@@ -54,19 +51,13 @@ export const StoreMenu = () => {
     }
   };
   const getData = async () => {
-    const data = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/storeCategory`,
-      options
-    );
+    const data = await fetch(`http://localhost:8000/storeCategory`, options);
     const jsondata = await data.json();
     setStoreMenu(jsondata);
     console.log("category", jsondata);
   };
   const getFood = async () => {
-    const data = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/store`,
-      options
-    );
+    const data = await fetch(`http://localhost:8000/store`, options);
     const jsondata = await data.json();
     setStores(jsondata);
     console.log("food", jsondata);
@@ -127,7 +118,7 @@ export const StoreMenu = () => {
                     <CategoryBadge
                       categoryName={name.categoryName}
                       key={index}
-                      totalfood={name.food}
+                      totalfood={name.store}
                     />
                   );
                 })}

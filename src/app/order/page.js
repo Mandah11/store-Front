@@ -1,14 +1,12 @@
 "use client";
 import Link from "next/link";
-import { FoodLogo } from "../admin/icon/adminfoodlogo";
-import { FoodBlackLogo } from "../admin/icon/adminfoodblacklogo";
-import { OrderWhiteLogo } from "../admin/icon/orderwhitefoodlogo";
-import { StateIcon } from "../admin/icon/statusIcon";
-import { DownIcon } from "../admin/icon/downicon";
-import { LeftIcon } from "../admin/icon/lefticon";
-import { RightIcon } from "../admin/icon/righticon";
 import { OrderList } from "./features/orderList";
 import { useEffect, useState } from "react";
+import { FoodBlackLogo } from "../icons/adminfoodblacklogo";
+import { FoodLogo } from "../icons/adminfoodlogo";
+import { LeftIcon } from "../icons/lefticon";
+import { OrderWhiteLogo } from "../icons/orderwhitefoodlogo";
+import { RightIcon } from "../icons/righticon";
 const options = {
   method: "GET",
   headers: {
@@ -21,10 +19,7 @@ const options = {
 export default function Home() {
   const [order, setOrder] = useState([]);
   const getData = async () => {
-    const data = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/orders`,
-      options
-    );
+    const data = await fetch(`http://localhost:8000//orders`, options);
     const jsondata = await data.json();
     setOrder(jsondata);
     console.log("order", jsondata);

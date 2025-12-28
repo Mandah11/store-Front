@@ -18,11 +18,11 @@ import { Textarea } from "@/components/ui/textarea";
 export const StoreCard = ({
   image,
   id,
-  foodName,
+  storeName,
   price,
   ingredients,
-  foodMenu,
-  FoodcategoryName,
+  storeMenu,
+  StorecategoryName,
   logoUrl,
   uploading,
   handleLogoUpload,
@@ -31,7 +31,7 @@ export const StoreCard = ({
 }) => {
   const [changeFoodstype, setChangeFoodsType] = useState(false);
   const [changeFoodMenu, setChangeFoodMenu] = useState({
-    FoodName: foodName,
+    StoreName: storeName,
     Price: price,
     Ingredients: ingredients,
     category: foodId,
@@ -40,7 +40,7 @@ export const StoreCard = ({
 
   const handleDelete = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/store`, {
+      const res = await fetch(`http://localhost:8000/store`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export const StoreCard = ({
   };
   const handleUpdate = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/store`, {
+      const res = await fetch(`http://localhost:8000/store`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const StoreCard = ({
         },
         body: JSON.stringify({
           id: id,
-          foodName: changeFoodMenu.FoodName,
+          storeName: changeFoodMenu.StoreName,
           price: changeFoodMenu.Price,
           ingredients: changeFoodMenu.Ingredients,
           category: changeFoodMenu.category,
@@ -102,7 +102,7 @@ export const StoreCard = ({
       </div>
       <div className="w-91.25 h-18  flex flex-col justify-between items-center">
         <div className="h-8  flex justify-between w-full ">
-          <p>{foodName}</p>
+          <p>{storeName}</p>
           <p>{price}</p>
         </div>
         <div className=" h-15 w-91.25 overflow-x-scroll">
@@ -156,10 +156,10 @@ export const StoreCard = ({
                   }
                 >
                   <SelectTrigger className="w-72 ">
-                    <SelectValue placeholder={FoodcategoryName} />
+                    <SelectValue placeholder={StorecategoryName} />
                   </SelectTrigger>
                   <SelectContent>
-                    {foodMenu.map((category) => {
+                    {storeMenu.map((category) => {
                       return (
                         <SelectGroup key={category._id}>
                           <SelectItem value={category._id}>

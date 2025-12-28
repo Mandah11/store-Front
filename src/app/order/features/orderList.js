@@ -1,5 +1,5 @@
 "use client";
-import { DownIcon } from "@/app/admin/icon/downicon";
+import { DownIcon } from "@/app/icons/downicon";
 import {
   Select,
   SelectContent,

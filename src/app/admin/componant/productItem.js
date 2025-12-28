@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "../../../components/ui/label";
 import { PhotoIcon } from "../../icons/photo";
 import Image from "next/image";
-import { FoodCard, StoreCard } from "./foodcard";
+import { FoodCard, StoreCard } from "./storecard";
 
 const options = {
   method: "GET",
@@ -77,7 +77,7 @@ export const ProductItem = ({
   const getFoodType = async () => {
     console.log("called");
     const data = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/store/findId/${id}`,
+      `http://localhost:8000/store/findId/${id}`,
       options
     );
     const jsondata = await data.json();
@@ -89,27 +89,27 @@ export const ProductItem = ({
     getFoodType();
   }, []);
 
-  const [addfood, setAddFood] = useState({
-    foodName: "",
+  const [addstore, setAddStore] = useState({
+    storeName: "",
     price: "",
     ingredients: "",
   });
   const [successmes, setSuccessMes] = useState("");
-  const [addFoodstype, setAddFoodsType] = useState(false);
+  const [addStorestype, setAddStoresType] = useState(false);
   const [changeFoodstype, setChangeFoodsType] = useState(false);
 
   const handleAddChange = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/food`, {
+      const res = await fetch(`http://localhost:8000/store`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
         },
         body: JSON.stringify({
-          foodName: addfood.foodName,
-          price: addfood.price,
-          ingredients: addfood.ingredients,
+          storeName: addstore.storeName,
+          price: addstore.price,
+          ingredients: addstore.ingredients,
           category: id,
           image: logoUrl,
         }),
@@ -118,8 +118,8 @@ export const ProductItem = ({
       getData();
       getfood();
 
-      setAddFoodsType(false);
-      setAddFood("");
+      setAddStoresType(false);
+      setAddStore("");
       setLogoUrl("");
       getFoodType();
       setSuccessMes("New dish is being added to the menu");
@@ -144,12 +144,12 @@ export const ProductItem = ({
               <button
                 className="h-12 rounded-3xl bg-[#ef4444] w-12 text-white text-[20px]"
                 onClick={() => {
-                  setAddFoodsType(true);
+                  setAddStoresType(true);
                 }}
               >
                 +
               </button>
-              <div className="flex justify-center items-center flex-col text-white">
+              <div className="flex justify-center items-center flex-col text-black">
                 <p>Add new Dish to</p>
                 <p>{StorecategoryName}</p>
               </div>
@@ -162,12 +162,12 @@ export const ProductItem = ({
                 // category={inform.category}
                 ingredients={inform.ingredients}
                 price={inform.price}
-                foodName={inform.foodName}
-                foodMenu={foodMenu}
-                foodId={foodId}
+                storeName={inform.storeName}
+                storeMenu={storeMenu}
+                storeId={storeId}
                 image={inform.image || "/facebook.png"}
                 onClick={() => setChangeFoodsType(true)}
-                FoodcategoryName={FoodcategoryName}
+                StorecategoryName={StorecategoryName}
                 logoUrl={logoUrl}
                 uploading={uploading}
                 handleLogoUpload={handleLogoUpload}
@@ -180,7 +180,7 @@ export const ProductItem = ({
           })}
         </div>
       </div>
-      {addFoodstype && (
+      {addStorestype && (
         <div className="flex fixed inset-0   z-1 bg-black/30 w-full h-full justify-center items-center">
           <div className="w-115 h-148 bg-white  rounded-2xl ml-10 items-center flex flex-col justify-evenly ">
             <div className="w-103 h-13 flex ">
@@ -189,7 +189,7 @@ export const ProductItem = ({
               </div>
               <button
                 className="h-9 w-9 bg-[#f5f5f7] rounded-2xl text-xl"
-                onClick={() => setAddFoodsType(false)}
+                onClick={() => setAddStoresType(false)}
               >
                 x
               </button>
@@ -200,11 +200,11 @@ export const ProductItem = ({
                 <input
                   className="h-9.5 px-2 border mt-1"
                   placeholder="Type food name"
-                  value={addfood.foodName}
+                  value={addstore.storeName}
                   onChange={(e) =>
-                    setAddFood({
-                      ...addfood,
-                      foodName: e.target.value,
+                    setAddStore({
+                      ...addstore,
+                      storeName: e.target.value,
                     })
                   }
                 />
@@ -214,10 +214,10 @@ export const ProductItem = ({
                 <input
                   className="h-9.5 px-2 border mt-1"
                   placeholder="Enter price"
-                  value={addfood.price}
+                  value={addstore.price}
                   onChange={(e) =>
-                    setAddFood({
-                      ...addfood,
+                    setAddStore({
+                      ...addstore,
                       price: e.target.value,
                     })
                   }
@@ -231,10 +231,10 @@ export const ProductItem = ({
                   placeholder="List ingredients..."
                   className="h-22.5"
                   id="message"
-                  value={addfood.ingredients}
+                  value={addstore.ingredients}
                   onChange={(e) =>
-                    setAddFood({
-                      ...addfood,
+                    setAddStore({
+                      ...addstore,
                       ingredients: e.target.value,
                     })
                   }
